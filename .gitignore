@@ -6,3 +6,4 @@ artifacts/
 apps/ephemeral/dist/
 .DS_Store
 .impeccable/
+dist/

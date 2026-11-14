@@ -8,13 +8,17 @@
     "ephemeral": "tsx apps/ephemeral/server.ts",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test apps/ephemeral/*.test.ts",
-    "test:ephemeral": "tsx --test apps/ephemeral/*.test.ts"
+    "test:ephemeral": "tsx --test apps/ephemeral/*.test.ts",
+    "build:sites": "node scripts/build-sites.mjs",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.4",
     "zod": "3.25.76"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "drizzle-kit": "^0.31.11",
     "esbuild": "^0.28.2",
     "prettier": "^3.10.1",
     "tsx": "^4.20.0",

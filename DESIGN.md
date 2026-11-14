@@ -200,3 +200,7 @@ Connections opens an inline, scrollable panel beneath the header, capped at 45dv
 - **Don't** introduce decorative gradients, large colored navigation surfaces, or webfont-led editorial typography into this confirmed neutral application direction.
 - **Don't** hide empty, incomplete, failed, or disconnected states behind invented records or success claims.
 - **Don't** replace the responsive document flow on mobile with the desktop sticky composer behavior.
+
+### Hosted connections
+
+On Sites, Connections shows the shared provider status and an optional public GitHub username. Visitors never see or change the host’s API key. The repository selector is read-only in the hosted sample demo. Browser-local preferences and the voice/text composer retain the same behavior; limit and connection failures use the existing inline status area.

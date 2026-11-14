@@ -16,7 +16,7 @@ Ephemeral software: speak a request, generate a GitHub workspace live with Cereb
 
 ## Operating Context
 
-Local browser demo with a public source repository. GitHub is the system of record. The repository contains illustrative sample issues and PRs labelled demo-data. The app is read-only and keeps API keys on the local server.
+Public ChatGPT Site and local development demo with a public source repository. The hosted Worker runs independently of the Mac, uses the host’s Cerebras account, and reserves shared and visitor request allowances atomically in D1. GitHub is the system of record. The repository contains illustrative sample issues and PRs labelled demo-data. The app is read-only and keeps API keys on the local server.
 
 ## Capabilities and Constraints
 

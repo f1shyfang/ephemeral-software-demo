@@ -22,7 +22,12 @@ try {
 } catch {
   /* Corrupt memory is ignored. */
 }
+let visitorLogin = "";
+try {
+  visitorLogin = localStorage.getItem("ephemeral.githubLogin.v1") || "";
+} catch {}
 let status: {
+  hosted?: boolean;
   cerebras: boolean;
   model: string;
   login: string;
@@ -208,7 +213,10 @@ function setBusy(value: boolean) {
     .querySelectorAll<HTMLButtonElement>(
       "#repo-form button, #clear-memory, [data-forget]",
     )
-    .forEach((b) => (b.disabled = value));
+    .forEach(
+      (b) =>
+        (b.disabled = value || (!!status?.hosted && !!b.closest("#repo-form"))),
+    );
   $("generate").setAttribute(
     "aria-label",
     value ? "Generating view" : "Generate view",
@@ -219,14 +227,32 @@ function setBusy(value: boolean) {
 async function refreshStatus() {
   const response = await fetch("/api/status");
   if (!response.ok)
-    throw Error("Could not reach the local server. Restart npm run ephemeral.");
+    throw Error("Could not reach the demo. Refresh the page and try again.");
   status = await response.json();
   $("connection-dot").classList.toggle("connected", status!.cerebras);
   $("github-connection").textContent = status!.github
     ? `GitHub connected as ${status!.login}. Uses your local gh authentication.`
     : "GitHub public access. Run gh auth login and restart for your assignments, review requests, and private repositories.";
   $<HTMLInputElement>("model").value = status!.model;
-  $("account-name").textContent = status!.login || "Public GitHub access";
+  if (status!.hosted) {
+    $("connection-form").hidden = true;
+    $("visitor-form").hidden = false;
+    $("connection-description").textContent = status!.cerebras
+      ? "Cerebras is connected for everyone. No API key needed. Your preferences stay in your browser."
+      : "The host is connecting Cerebras. Please try again shortly.";
+    $("connection-panel").querySelector("h2")!.textContent = "Demo connections";
+    $("github-connection").textContent =
+      "This demo uses public sample issues and PRs. Add a GitHub username to filter requests like ‘assigned to me’. No GitHub sign-in is needed.";
+    $<HTMLInputElement>("github-login").value = visitorLogin;
+    repo.readOnly = true;
+    document.querySelector<HTMLButtonElement>("#repo-form button")!.disabled =
+      true;
+    document.querySelector(".account small")!.textContent =
+      "Preferences saved on this device";
+  }
+  $("account-name").textContent = status!.hosted
+    ? visitorLogin || "Public demo"
+    : status!.login || "Public GitHub access";
   document.querySelector(".avatar")!.textContent = (status!.login || "G")
     .slice(0, 1)
     .toUpperCase();
@@ -236,7 +262,7 @@ function useRepository() {
     voiceError = true;
     recognition.abort();
   }
-  const value = repo.value.trim();
+  const value = status?.hosted ? status.repository : repo.value.trim();
   if (!/^[\w.-]+\/[\w.-]+$/.test(value)) {
     notice("Enter a repository as owner/name.", true);
     repo.focus();
@@ -273,6 +299,13 @@ async function generate() {
   }
   if (!useRepository()) return;
   if (!status?.cerebras) {
+    if (status?.hosted) {
+      notice(
+        "The host is connecting Cerebras. Please try again shortly.",
+        true,
+      );
+      return;
+    }
     $("connection-panel").hidden = false;
     $<HTMLInputElement>("api-key").focus();
     notice("Add your Cerebras key to generate a live workspace.");
@@ -301,6 +334,7 @@ async function generate() {
         preferences,
         previous,
         history: history.slice(-12),
+        ...(status?.hosted ? { githubLogin: visitorLogin } : {}),
       }),
     });
     if (!response.ok) {
@@ -477,6 +511,25 @@ $("connections").addEventListener("click", () => {
 $("close-connections").addEventListener("click", () => {
   $("connection-panel").hidden = true;
 });
+$("visitor-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const value = $<HTMLInputElement>("github-login")
+    .value.trim()
+    .replace(/^@/, "");
+  if (!/^[a-zA-Z0-9-]{0,39}$/.test(value)) {
+    notice("Enter a valid GitHub username.", true);
+    return;
+  }
+  visitorLogin = value;
+  try {
+    localStorage.setItem("ephemeral.githubLogin.v1", value);
+  } catch {}
+  $("account-name").textContent = value || "Public demo";
+  $("connection-panel").hidden = true;
+  notice(
+    value ? `Personal filters will use ${value}.` : "GitHub username cleared.",
+  );
+});
 $("connection-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const input = $<HTMLInputElement>("api-key");
@@ -596,11 +649,16 @@ void refreshStatus()
       storageAvailable = false;
     }
     repo.value =
-      (saved === "f1shyfang/formal-verification-pr-workflow" ? null : saved) ||
-      status!.repository;
+      (status!.hosted || saved === "f1shyfang/formal-verification-pr-workflow"
+        ? null
+        : saved) || status!.repository;
     useRepository();
     if (!status!.cerebras)
-      notice("Connect Cerebras to start generating. GitHub is ready.");
+      notice(
+        status!.hosted
+          ? "The host is connecting Cerebras. Please try again shortly."
+          : "Connect Cerebras to start generating. GitHub is ready.",
+      );
     if (!storageAvailable)
       notice(
         "Browser storage is unavailable. Preferences will last for this tab only.",

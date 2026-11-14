@@ -9,7 +9,19 @@ npm run ephemeral
 
 Open [the local demo](http://127.0.0.1:4321). Use Chrome for browser dictation and allow microphone access. Typed requests work in other browsers. Speech recognition may use the browser vendor's remote transcription service; Cerebras generates the layout from the transcript.
 
-## Connect
+## Shareable ChatGPT Site
+
+The cloud deployment is at [ephemeral-spoken-workspace.redbat35.chatgpt.site](https://ephemeral-spoken-workspace.redbat35.chatgpt.site/). It runs as a standalone Sites Worker with D1; it does not depend on the developer’s Mac or a local tunnel.
+
+Visitors use the host’s Cerebras account without entering a key. The key and session-signing secret are server-side Sites secrets. The shared demo reads only this repository’s public sample issues and PRs, and never uses the developer’s private GitHub token. Visitors can add an optional public GitHub username in Connections for personal filters; that is a filter preference, not GitHub authentication.
+
+Preferences stay in each browser. An HttpOnly signed cookie identifies the visitor’s generation allowance. Atomic D1 reservations allow up to **100 generation attempts per UTC day across the demo**, with **10 per visitor**. Failed attempts consume an allowance. Public GitHub responses are briefly cached to reduce API rate-limit pressure. These are request limits, not dollar-budget guarantees.
+
+Open the Site directly in Chrome and allow microphone access to dictate. Browser support is feature-detected, and typed input remains available. The HTTPS deployment permits microphone access for its own origin. Physical microphone behavior still depends on the visitor’s browser and permissions.
+
+Hosted source is `apps/ephemeral/hosted-worker.ts`; `npm run build:sites` produces the self-contained Worker at `dist/server/index.js`. `.openai/hosting.json` retains the Site ID and D1 binding. Database schema changes are generated with `npm run db:generate`; migrations are included in the deployment archive. Configure `CEREBRAS_API_KEY`, `SESSION_SECRET`, `CEREBRAS_MODEL`, `DAILY_GENERATION_LIMIT`, and `VISITOR_GENERATION_LIMIT` with Sites environment tools, then deploy a saved version to apply changes. The publishing checkout is retained under ignored `artifacts/sites-ephemeral/`.
+
+## Connect (local development)
 
 GitHub uses `GITHUB_TOKEN` or the current `gh auth token` in server memory. Without authentication it can search public repositories; personal assignments and review requests require an authenticated account. Run `gh auth login` before starting. Credentials never reach generated layouts or browser JavaScript.
 

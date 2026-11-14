@@ -164,7 +164,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               Close
             </button>
           </div>
-          <p>Your key stays in this local server’s memory until you stop it.</p>
+          <p id="connection-description">
+            Your key stays in this local server’s memory until you stop it.
+          </p>
           <form id="connection-form">
             <div>
               <label for="api-key">Cerebras API key</label
@@ -182,6 +184,20 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               ><input id="model" value="qwen-3.8-27b" required />
             </div>
             <button class="primary" type="submit">Save connection</button>
+          </form>
+          <form id="visitor-form" hidden>
+            <div>
+              <label for="github-login">Your GitHub username (optional)</label
+              ><input
+                id="github-login"
+                autocomplete="off"
+                spellcheck="false"
+                maxlength="39"
+                pattern="[a-zA-Z0-9-]*"
+                placeholder="For requests like ‘assigned to me’"
+              />
+            </div>
+            <button class="primary" type="submit">Save username</button>
           </form>
           <p id="github-connection"></p>
           <p id="connection-notice" role="status"></p>
