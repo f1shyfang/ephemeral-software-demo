@@ -213,7 +213,7 @@ $('mic').addEventListener('click',()=>{
 renderMemory();
 void refreshStatus().then(()=>{
   let saved:string|null=null;try{saved=localStorage.getItem(repoKey);}catch{storageAvailable=false;}
-  repo.value=saved||status!.repository;useRepository();
+  repo.value=(saved === 'f1shyfang/formal-verification-pr-workflow' ? null : saved)||status!.repository;useRepository();
   if(!status!.cerebras){$('connection-panel').hidden=false;notice('Connect Cerebras to start generating. GitHub is ready.');}
   if(!storageAvailable)notice('Browser storage is unavailable. Preferences will last for this tab only.',true);
 }).catch(error=>notice(error.message,true));
