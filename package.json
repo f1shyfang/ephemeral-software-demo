@@ -1,0 +1,23 @@
+{
+  "name": "ephemeral-software-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx apps/ephemeral/server.ts",
+    "ephemeral": "tsx apps/ephemeral/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test apps/ephemeral/*.test.ts",
+    "test:ephemeral": "tsx --test apps/ephemeral/*.test.ts"
+  },
+  "dependencies": {
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.28.2",
+    "prettier": "^3.10.1",
+    "tsx": "^4.20.0",
+    "typescript": "5.9.3"
+  }
+}
