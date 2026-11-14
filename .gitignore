@@ -5,3 +5,4 @@ node_modules/
 artifacts/
 apps/ephemeral/dist/
 .DS_Store
+.impeccable/
