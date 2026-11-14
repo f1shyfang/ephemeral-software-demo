@@ -1,5 +1,5 @@
 ---
-name: Ephemeral
+name: Interface
 description: A quiet, Dia-inspired workspace shaped by a spoken GitHub task.
 colors:
   accent: "#27282e"
@@ -100,7 +100,7 @@ components:
     padding: "1px 5px"
 ---
 
-# Design System: Ephemeral
+# Design System: Interface
 
 ## Overview
 

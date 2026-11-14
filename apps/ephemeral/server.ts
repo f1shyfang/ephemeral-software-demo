@@ -99,4 +99,4 @@ const server = createServer(async (req, res) => {
   } catch (error) { json(res, 400, {error: error instanceof z.ZodError ? 'Invalid request. Check the repository name and input.' : 'Could not read the request. Please retry.'}); }
 });
 server.requestTimeout = 70000;
-server.listen(port, '127.0.0.1', () => console.log(`Ephemeral: http://${host}\nGitHub: ${login || 'public access'} · Cerebras: ${key ? model : 'add a key in Connections'}`));
+server.listen(port, '127.0.0.1', () => console.log(`Interface: http://${host}\nGitHub: ${login || 'public access'} · Cerebras: ${key ? model : 'add a key in Connections'}`));

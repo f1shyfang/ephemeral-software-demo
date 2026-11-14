@@ -1,4 +1,4 @@
-# Ephemeral GitHub workspace
+# Interface GitHub workspace
 
 A local, read-only GitHub demo. Dictate a task, watch Cerebras stream a layout, refine it by speaking, and retain explicit UI preferences across workspaces and browser reloads.
 

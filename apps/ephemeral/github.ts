@@ -22,7 +22,7 @@ export function searchQuery(repository: string, section: Section, login: string)
 }
 export async function githubJson(path: string, token: string, signal?: AbortSignal, fetcher = fetch): Promise<any> {
   const res = await fetcher(`https://api.github.com${path}`, { headers: {
-    accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'Ephemeral-GitHub-Demo', ...(token ? { authorization: `Bearer ${token}` } : {}),
+    accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'Interface-GitHub-Demo', ...(token ? { authorization: `Bearer ${token}` } : {}),
   }, signal: signal ?? AbortSignal.timeout(15000) });
   if (!res.ok) {
     if (res.status === 403 || res.status === 429) throw Error('GitHub rate limit or access restriction. Wait a minute, or check repository access, then retry.');

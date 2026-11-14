@@ -12,7 +12,7 @@ GitHub contributors who want a task-specific interface from a spoken request.
 
 ## Product Purpose
 
-Ephemeral software: speak a request, generate a GitHub workspace live with Cerebras, refine it by speaking, and remember explicit UI preferences.
+Interface: speak a request, generate a GitHub workspace live with Cerebras, refine it by speaking, and remember explicit UI preferences.
 
 ## Operating Context
 

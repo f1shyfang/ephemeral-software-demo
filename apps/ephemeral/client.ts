@@ -91,7 +91,7 @@ function renderHistory() {
   $("history").innerHTML = history
     .map(
       (item) =>
-        `<p class="message ${item.role}"><strong>${item.role === "user" ? "You" : "Ephemeral"}</strong>${escape(item.content)}</p>`,
+        `<p class="message ${item.role}"><strong>${item.role === "user" ? "You" : "Interface"}</strong>${escape(item.content)}</p>`,
     )
     .join("");
   $("history").parentElement!.scrollTop =
