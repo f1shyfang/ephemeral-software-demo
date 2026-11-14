@@ -19,7 +19,7 @@ Configuration:
 
 - `EPHEMERAL_PORT`: loopback port, default `4321`.
 - `EPHEMERAL_REPOSITORY`: initial repository, default `f1shyfang/ephemeral-software-demo`. Change it in the UI at any time. For a repository with abundant public data, try `microsoft/vscode`.
-- `EPHEMERAL_GENERATION_LIMIT`: cumulative maximum provider attempts for this demo, default `100`. The durable counter is `artifacts/ephemeral/allowance.json`, reserved before each call. Restarting does not reset it. Each attempt requests at most 3,000 completion tokens; failed or unknown attempts still consume an allowance. This is a request limit, not a dollar budget. The existing verification engine's dollar budget is separate.
+- `EPHEMERAL_GENERATION_LIMIT`: cumulative maximum provider attempts for this demo, default `100`. The durable counter is `artifacts/ephemeral/allowance.json`, reserved before each call. Restarting does not reset it. Each attempt requests at most 3,000 completion tokens; failed or unknown attempts still consume an allowance. This is a request limit, not a dollar budget.
 
 The server binds to `127.0.0.1`, validates Host and Origin, rejects cross-site calls, and keeps secrets server-side. Do not expose this local credential-bearing demo through a public tunnel.
 
